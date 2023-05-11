@@ -3,12 +3,23 @@
 <body>
 <div th:fragment="copy">
     <hr>
-    <div th:each="current_news : ${news}">
-        <h2 class="align-middle" th:text="${current_news.getTitle}"></h2>
-        <h4 class="align-middle" th:text="${current_news.getDate}"></h4>
-        <h3 class="align-middle" th:text="${current_news.getText}"></h3>
+
+    <h2 class="align-middle" th:text="${current_news.getTitle}"></h2>
+    <h4 class="align-middle" th:text="${current_news.getDateAsString}"></h4>
+    <h3 class="align-middle" th:text="${current_news.getText}"></h3>
+    <div th:if="${current_news.getEncodedImage != null}">
+        <img th:src="@{'data:image/jpeg;base64,'+${current_news.getEncodedImage}}" width="600"
+             height="400"/>
     </div>
-    <hr>
+    <!--        <img th:src="@{'data:image/jpeg;base64,'+${current_news.getEncodedImage}}" width="600"-->
+    <!--             height="400" />-->
 </div>
 </body>
 </html>
+
+
+<!--<div th:each="current_news : ${news}">-->
+<!--    <h2 class="align-middle" th:text="${current_news.getTitle}"></h2>-->
+<!--    <h4 class="align-middle" th:text="${current_news.getDate}"></h4>-->
+<!--    <h3 class="align-middle" th:text="${current_news.getText}"></h3>-->
+<!--</div>-->
