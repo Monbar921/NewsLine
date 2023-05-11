@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>Добавление новости</h1>
+<br>
+<style>
+    textarea {
+        width: 60%; /* Ширина поля в процентах */
+        height: 200px; /* Высота поля в пикселах */
+        resize: none; /* Запрещаем изменять размер */
+    }
+</style>
+
+<form th:action="@{/new}" th:object="${addedNews}" method="post">
+    <div>
+        <label>Заголовок:</label>
+        <input type="text" placeholder="Заголовок" size="50"/>
+    </div>
+    <br>
+    <div>
+        <label>Дата:</label>
+        <input type="text" placeholder="yyyy-MM-dd"/>
+    </div>
+
+    <div>
+        <div>Содержимое:</div>
+            <textarea></textarea>
+    </div>
+
+    <br>
+    <div class="form-group">
+        <input type="file" name="image" accept="image/*" class="form-control-file">
+    </div>
+    <br>
+    <button type="submit">Выбрать</button>
+</form>
+
+</body>
+</html>
+

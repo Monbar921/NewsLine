@@ -11,5 +11,4 @@ public interface NewsService {
     int getPagesAmount();
     void setPagesAmount(int pageAmount);
 
-//    boolean isThisPagesAmountSet(int pagesAmount);
 }

@@ -23,8 +23,7 @@ public class MainController {
     private NewsService newsService;
 
     @RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
-    public String index(Model model) {
-
+    public String index() {
         return "index";
     }
 
@@ -48,10 +47,14 @@ public class MainController {
         newsService.setPagesAmount(Integer.parseInt(pagesAmount));
         return "redirect:/newsline/page/1";
     }
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String add() {
+        return "/add";
+    }
 
-    @RequestMapping(value="/add", method = RequestMethod.POST)
-    public String addNews (@Valid String pagesAmount) {
-        newsService.setPagesAmount(Integer.parseInt(pagesAmount));
+    @RequestMapping(value="/new", method = RequestMethod.POST)
+    public String addNews (@ModelAttribute News addedNews) {
+        System.out.println(1111);
         return "redirect:/";
     }
 }
