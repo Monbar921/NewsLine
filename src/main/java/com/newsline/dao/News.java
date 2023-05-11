@@ -14,8 +14,6 @@ public class News {
     public int id;
     private String title;
     private Date date;
-
-
     private String text;
     private byte[] image;
 
@@ -43,5 +41,4 @@ public class News {
     public String getEncodedImage(){
         return image == null ? null : Base64.getEncoder().encodeToString(image);
     }
-
 }
