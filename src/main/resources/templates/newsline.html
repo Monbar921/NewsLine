@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Start page</title>
+</head>
+<body>
+<h1>Newsline</h1>
+</body>
+
+<body>
+<div th:each="current_news : ${news}">
+    <div th:insert="~{news :: copy}"></div>
+</div>
+
+<br>
+<hr>
+<div>Перейти на страницу</div>
+<div class="row" th:fragment="pagination">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link" th:href="@{|/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<a>Новостей на странице</a>
+<form th:action="@{/choose}" method="post">
+    <select class="form-control" id="courierTasks" name="pagesAmount">
+        <option th:selected=(${pagesAmount}==10) value="10">10</option>
+        <option th:selected=(${pagesAmount}==20) value="20">20</option>
+        <option th:selected=(${pagesAmount}==50) value="50">50</option>
+    </select>
+    <input type="hidden"/>
+    <button type="submit">Выбрать</button>
+</form>
+
+</body>
+</html>
+
+
+
+
+

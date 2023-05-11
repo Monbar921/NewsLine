@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NewsServiceImpl implements NewsService {
-    private int pageAmount = 1;
+    private int pagesAmount = 20;
     @Autowired
     private NewsDAO newsDAO;
 
@@ -19,12 +19,12 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public int getPageAmount() {
-        return pageAmount;
+    public int getPagesAmount() {
+        return pagesAmount;
     }
 
     @Override
-    public void setPageAmount(int pageAmount) {
-        this.pageAmount = pageAmount;
+    public void setPagesAmount(int pagesAmount) {
+        this.pagesAmount = pagesAmount;
     }
 }
