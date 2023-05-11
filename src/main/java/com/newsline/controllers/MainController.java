@@ -48,13 +48,15 @@ public class MainController {
         return "redirect:/newsline/page/1";
     }
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String add() {
+    public String add(Model model) {
+        model.addAttribute("addedNews", new News());
         return "/add";
     }
 
     @RequestMapping(value="/new", method = RequestMethod.POST)
     public String addNews (@ModelAttribute News addedNews) {
         System.out.println(1111);
+        System.out.println(addedNews.getTitle());
         return "redirect:/";
     }
 }

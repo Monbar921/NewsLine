@@ -12,19 +12,25 @@
 </style>
 
 <form th:action="@{/new}" th:object="${addedNews}" method="post">
-    <div>
-        <label>Заголовок:</label>
-        <input type="text" placeholder="Заголовок" size="50"/>
-    </div>
-    <br>
-    <div>
-        <label>Дата:</label>
-        <input type="text" placeholder="yyyy-MM-dd"/>
-    </div>
+
+    <table>
+        <tr>
+            <td>Заголовок:</td>
+            <td><input type="text" th:field="*{title}" placeholder="Заголовок" size="50" /></td>
+<!--            <td th:if="true" th:errors="">Name Error</td>-->
+        </tr>
+
+        <tr>
+            <td>Дата:</td>
+            <td><input type="text" th:field="*{date}" pattern="\d{4}-\d{1,2}-\d{1,2}" placeholder="yyyy-MM-dd" size="50" /></td>
+                        <td th:if=true th:errors="*{date}">Name Error</td>
+        </tr>
+
+    </table>
 
     <div>
         <div>Содержимое:</div>
-            <textarea></textarea>
+            <textarea th:field="*{text}"></textarea>
     </div>
 
     <br>
@@ -32,7 +38,7 @@
         <input type="file" name="image" accept="image/*" class="form-control-file">
     </div>
     <br>
-    <button type="submit">Выбрать</button>
+    <button type="submit">Добавить</button>
 </form>
 
 </body>
