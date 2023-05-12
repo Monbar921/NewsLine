@@ -62,16 +62,17 @@ public class MainController {
     @RequestMapping(value="/new", method = RequestMethod.POST)
     public String addNews (@Valid News news, BindingResult bindingResult, Model model) {
 //        ModelAttribute
-        System.out.println("Title + " + news.getTitle());
-        System.out.println("Date + " + news.getDate());
-        System.out.println("Text + " + news.getText());
-        System.out.println("image + " + news.getImage());
+        System.out.println("Title  " + news.getTitle());
+        System.out.println("Date  " + news.getDate());
+        System.out.println("Text  " + news.getText());
+        System.out.println("image  " + news.getImage());
         if(news.getImage() != null){
             System.out.println(news.getImage().length);
         }
         if (bindingResult.hasErrors()) {
             return "add";
         }
+        newsService.saveNews(news);
         return "redirect:/";
     }
 }

@@ -10,5 +10,6 @@ public interface NewsService {
     Page<News> getPaginatedNews(Pageable pageable);
     int getPagesAmount();
     void setPagesAmount(int pageAmount);
+    void saveNews(News news);
 
 }
