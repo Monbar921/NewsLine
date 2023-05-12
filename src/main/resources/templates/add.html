@@ -9,28 +9,32 @@
         height: 200px; /* Высота поля в пикселах */
         resize: none; /* Запрещаем изменять размер */
     }
+
+
 </style>
 
-<form th:action="@{/new}" th:object="${addedNews}" method="post">
+<form th:action="@{/new}" th:object="${news}" method="post">
 
     <table>
         <tr>
             <td>Заголовок:</td>
-            <td><input type="text" th:field="*{title}" placeholder="Заголовок" size="50" /></td>
-<!--            <td th:if="true" th:errors="">Name Error</td>-->
+            <td><input type="text" th:field="*{title}" pattern="^\S+$" size="50" required/></td>
+            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></td>
         </tr>
 
         <tr>
             <td>Дата:</td>
-            <td><input type="text" th:field="*{date}" pattern="\d{4}-\d{1,2}-\d{1,2}" placeholder="yyyy-MM-dd" size="50" /></td>
-                        <td th:if=true th:errors="*{date}">Name Error</td>
+            <td><input type="text" th:field="*{date}" pattern="\d{4}-\d{1,2}-\d{1,2}" placeholder="yyyy-MM-dd" size="50"
+                       required/>Введите верную дату!
+            </td>
         </tr>
 
     </table>
 
     <div>
         <div>Содержимое:</div>
-            <textarea th:field="*{text}"></textarea>
+        <textarea th:id="text" th:field="*{text}" required></textarea>
+        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>
     </div>
 
     <br>

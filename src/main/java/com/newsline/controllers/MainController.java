@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,15 +49,29 @@ public class MainController {
         return "redirect:/newsline/page/1";
     }
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String add(Model model) {
-        model.addAttribute("addedNews", new News());
-        return "/add";
+    public String showAddNewsForm(News news) {
+        return "add";
     }
 
+//    @RequestMapping(value = "/add", method = RequestMethod.GET)
+//    public String add(Model model) {
+//        model.addAttribute("addedNews", new News());
+//        return "/add";
+//    }
+
     @RequestMapping(value="/new", method = RequestMethod.POST)
-    public String addNews (@ModelAttribute News addedNews) {
-        System.out.println(1111);
-        System.out.println(addedNews.getTitle());
+    public String addNews (@Valid News news, BindingResult bindingResult, Model model) {
+//        ModelAttribute
+        System.out.println("Title + " + news.getTitle());
+        System.out.println("Date + " + news.getDate());
+        System.out.println("Text + " + news.getText());
+        System.out.println("image + " + news.getImage());
+        if(news.getImage() != null){
+            System.out.println(news.getImage().length);
+        }
+        if (bindingResult.hasErrors()) {
+            return "add";
+        }
         return "redirect:/";
     }
 }

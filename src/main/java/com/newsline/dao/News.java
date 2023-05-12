@@ -1,7 +1,10 @@
 package com.newsline.dao;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.SimpleDateFormat;
@@ -15,13 +18,15 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
     @NotNull
+    @Pattern(regexp="^\\S+$", message="Заголовок не должен быть пустым и состоять только из пробелов!")
     private String title;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     private Date date;
     @NotNull
+    @Pattern(regexp="^\\S+$", message="Содержимое не должно быть пустым и состоять только из пробелов!")
     private String text;
-    @NotNull
+
     private byte[] image;
 
     public void setTitle(String title) {
