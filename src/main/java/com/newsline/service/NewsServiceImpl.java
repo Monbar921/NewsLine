@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NewsServiceImpl implements NewsService {
+public final class NewsServiceImpl implements NewsService {
     //This variable stores the value of the displayed news on the page, default value is 10
     private int newsOnPageAmount = 10;
     @Autowired

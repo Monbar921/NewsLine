@@ -8,6 +8,7 @@
 </body>
 
 <body>
+<!--Insert each news with "news.html" template-->
 <div th:each="current_news : ${news}">
     <div th:insert="~{news :: copy}"></div>
 </div>
@@ -31,7 +32,8 @@
 
 <a>Новостей на странице</a>
 <form th:action="@{/choose}" method="post">
-    <select class="form-control" id="courierTasks" name="newsOnPageAmount">
+    <select class="form-control" name="newsOnPageAmount">
+        <!--        Will be selected value which mathes with similar field of NewsServiceImpl class-->
         <option th:selected=(${newsOnPageAmount}==10) value="10">10</option>
         <option th:selected=(${newsOnPageAmount}==20) value="20">20</option>
         <option th:selected=(${newsOnPageAmount}==50) value="50">50</option>

@@ -5,20 +5,19 @@
 <br>
 <style>
     textarea {
-        width: 60%; /* Ширина поля в процентах */
-        height: 200px; /* Высота поля в пикселах */
-        resize: none; /* Запрещаем изменять размер */
+        width: 60%;
+        height: 200px;
+        resize: none;
     }
-
-
 </style>
 
-<form th:action="@{/new}"  enctype="multipart/form-data" th:object="${news}" method="post">
-
+<form th:action="@{/new}" enctype="multipart/form-data" th:object="${news}" method="post">
     <table>
         <tr>
             <td>Заголовок:</td>
             <td><input type="text" th:field="*{title}" pattern="^\S+$" size="50" required/></td>
+            <!--            This form has validation, which was set on fields in News class. This text will be shown -->
+            <!--            if field do not match these validation requirements-->
             <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red"></td>
         </tr>
 

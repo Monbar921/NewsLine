@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
+/*This is the interface to collect information from database*/
 @Repository
 @Transactional
 public interface NewsDAO extends CrudRepository<News, Integer> {
