@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface NewsService {
     Page<News> getPaginatedNews(Pageable pageable);
-    int getPagesAmount();
-    void setPagesAmount(int pageAmount);
+    int getNewsOnPageAmount();
+    void setNewsOnPageAmount(int pageAmount);
     void saveNews(News news);
+
+    boolean isNewsExist(News news);
 
 }

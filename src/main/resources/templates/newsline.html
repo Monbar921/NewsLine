@@ -21,7 +21,7 @@
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:each="pageNumber : ${pageNumbers}">
-                    <a class="page-link" th:href="@{|/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                    <a class="page-link" th:href="@{|/newsline/page/${pageNumber}|}" th:text=${pageNumber}>1</a>
                 </li>
             </ul>
         </nav>
@@ -31,10 +31,10 @@
 
 <a>Новостей на странице</a>
 <form th:action="@{/choose}" method="post">
-    <select class="form-control" id="courierTasks" name="pagesAmount">
-        <option th:selected=(${pagesAmount}==10) value="10">10</option>
-        <option th:selected=(${pagesAmount}==20) value="20">20</option>
-        <option th:selected=(${pagesAmount}==50) value="50">50</option>
+    <select class="form-control" id="courierTasks" name="newsOnPageAmount">
+        <option th:selected=(${newsOnPageAmount}==10) value="10">10</option>
+        <option th:selected=(${newsOnPageAmount}==20) value="20">20</option>
+        <option th:selected=(${newsOnPageAmount}==50) value="50">50</option>
     </select>
     <input type="hidden"/>
     <button type="submit">Выбрать</button>

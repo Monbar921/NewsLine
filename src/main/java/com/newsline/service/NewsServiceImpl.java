@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NewsServiceImpl implements NewsService {
-    private int pagesAmount = 20;
+    //This variable stores the value of the displayed news on the page
+    private int newsOnPageAmount = 20;
     @Autowired
     private NewsDAO newsDAO;
 
@@ -21,19 +22,25 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public int getPagesAmount() {
-        return pagesAmount;
+    public int getNewsOnPageAmount() {
+        return newsOnPageAmount;
     }
 
     @Override
-    public void setPagesAmount(int pagesAmount) {
-        this.pagesAmount = pagesAmount;
+    public void setNewsOnPageAmount(int newsOnPageAmount) {
+        this.newsOnPageAmount = newsOnPageAmount;
     }
+
     @Override
-    public void saveNews(News news){
-        if(news.getImage().length == 0){
+    public void saveNews(News news) {
+        if (news.getImage().length == 0) {
             news.setImage(null);
         }
         newsDAO.save(news);
+    }
+
+    @Override
+    public boolean isNewsExist(News news) {
+        return newsDAO.findByTitleAndDate(news.getTitle(), news.getDate()).size() != 0;
     }
 }
