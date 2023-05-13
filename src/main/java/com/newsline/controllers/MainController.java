@@ -8,15 +8,19 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static org.springframework.http.MediaType.*;
 
 @Controller
 public class MainController {
@@ -60,7 +64,7 @@ public class MainController {
 //    }
 
     @RequestMapping(value="/new", method = RequestMethod.POST)
-    public String addNews (@Valid News news, BindingResult bindingResult, Model model) {
+    public String addNews (@Valid News news, BindingResult bindingResult, @RequestParam MultipartFile file) {
 //        ModelAttribute
         System.out.println("Title  " + news.getTitle());
         System.out.println("Date  " + news.getDate());
@@ -69,10 +73,37 @@ public class MainController {
         if(news.getImage() != null){
             System.out.println(news.getImage().length);
         }
+        System.out.println("file  " + file);
+
+        try{
+            news.setImage(file.getBytes());
+        }catch (Exception e){
+            System.out.println("except");
+        }
+
         if (bindingResult.hasErrors()) {
             return "add";
         }
         newsService.saveNews(news);
         return "redirect:/";
     }
+
+
+
+//    @RequestMapping(value="/new", method = RequestMethod.POST)
+//    public String addNews (@Valid News news, BindingResult bindingResult, Model model) {
+////        ModelAttribute
+//        System.out.println("Title  " + news.getTitle());
+//        System.out.println("Date  " + news.getDate());
+//        System.out.println("Text  " + news.getText());
+//        System.out.println("image  " + news.getImage());
+//        if(news.getImage() != null){
+//            System.out.println(news.getImage().length);
+//        }
+//        if (bindingResult.hasErrors()) {
+//            return "add";
+//        }
+//        newsService.saveNews(news);
+//        return "redirect:/";
+//    }
 }

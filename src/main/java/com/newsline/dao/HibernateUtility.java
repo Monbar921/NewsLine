@@ -16,7 +16,6 @@ public class HibernateUtility {
                 .applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration
                 .buildSessionFactory(serviceRegistry);
-
         return sessionFactory;
     }
 

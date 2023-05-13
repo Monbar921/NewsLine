@@ -13,7 +13,7 @@
 
 </style>
 
-<form th:action="@{/new}" th:object="${news}" method="post">
+<form th:action="@{/new}"  enctype="multipart/form-data" th:object="${news}" method="post">
 
     <table>
         <tr>
@@ -38,9 +38,13 @@
     </div>
 
     <br>
+<!--    <div class="form-group">-->
+<!--        <input type="file" th:field="*{image}" accept="image/*" class="form-control-file">-->
+<!--    </div>-->
     <div class="form-group">
-        <input type="file" th:field="*{image}" accept="image/*" class="form-control-file">
+        <input type="file" name="file" accept="image/*" class="form-control-file">
     </div>
+
     <br>
     <button type="submit">Добавить</button>
 </form>

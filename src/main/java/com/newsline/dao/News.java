@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.Base64;
@@ -69,4 +70,6 @@ public class News {
     public String getEncodedImage(){
         return image == null ? null : Base64.getEncoder().encodeToString(image);
     }
+
+
 }
