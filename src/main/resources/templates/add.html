@@ -19,14 +19,14 @@
         <tr>
             <td>Заголовок:</td>
             <td><input type="text" th:field="*{title}" pattern="^\S+$" size="50" required/></td>
-            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></td>
+            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red"></td>
         </tr>
 
         <tr>
             <td>Дата:</td>
             <td><input type="text" th:field="*{date}" pattern="\d{4}-\d{1,2}-\d{1,2}" placeholder="yyyy-MM-dd" size="50"
-                       required/>Введите верную дату!
-            </td>
+                       required/></td>
+            <td th:if="${#fields.hasErrors('date')}" style="color:red">Введите верную дату!</td>
         </tr>
 
     </table>
@@ -34,13 +34,10 @@
     <div>
         <div>Содержимое:</div>
         <textarea th:id="text" th:field="*{text}" required></textarea>
-        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>
+        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}" style="color:red"></div>
     </div>
 
     <br>
-<!--    <div class="form-group">-->
-<!--        <input type="file" th:field="*{image}" accept="image/*" class="form-control-file">-->
-<!--    </div>-->
     <div class="form-group">
         <input type="file" name="file" accept="image/*" class="form-control-file">
     </div>
@@ -48,7 +45,8 @@
     <br>
     <button type="submit">Добавить</button>
 </form>
-
+<br>
+<a href="/">На главную</a>
 </body>
 </html>
 

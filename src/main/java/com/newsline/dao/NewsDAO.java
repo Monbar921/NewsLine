@@ -14,6 +14,7 @@ import java.util.List;
 public interface NewsDAO extends CrudRepository<News, Integer> {
     List<News> findAllByOrderById();
     Page<News> findAll(Pageable pageable);
+    Page<News> findAllByOrderById(Pageable pageable);
 
 //    <S extends News> S save(News news);
 }

@@ -3,12 +3,6 @@ package com.newsline.service;
 import com.newsline.dao.News;
 import com.newsline.dao.NewsDAO;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -17,15 +11,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NewsServiceImpl implements NewsService {
-    @PersistenceContext
-    private EntityManager entityManager;
     private int pagesAmount = 20;
     @Autowired
     private NewsDAO newsDAO;
 
     @Override
     public Page<News> getPaginatedNews(Pageable pageable) {
-        return newsDAO.findAll(pageable);
+        return newsDAO.findAllByOrderById(pageable);
     }
 
     @Override
