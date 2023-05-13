@@ -11,7 +11,6 @@ public interface NewsService {
     int getNewsOnPageAmount();
     void setNewsOnPageAmount(int pageAmount);
     void saveNews(News news);
-
     boolean isNewsExist(News news);
 
 }
