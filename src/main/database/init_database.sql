@@ -1,5 +1,5 @@
 CREATE DATABASE newsline;
-
+\c newsline;
 CREATE TABLE IF NOT EXISTS news(
     id serial NOT NULL,
     title varchar NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS news(
     image BYTEA
 );
 
-drop table news;
+
 
 -- INSERT INTO news(title, date, text) VALUES ('Big boss die', '2022-01-01', 'interesting story')
 
