@@ -7,8 +7,3 @@ CREATE TABLE IF NOT EXISTS news(
     text varchar NOT NULL,
     image BYTEA
 );
-
-
-
--- INSERT INTO news(title, date, text) VALUES ('Big boss die', '2022-01-01', 'interesting story')
-
