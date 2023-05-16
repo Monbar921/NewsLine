@@ -15,6 +15,7 @@ import java.util.List;
 @Transactional
 public interface NewsDAO extends CrudRepository<News, Integer> {
     Page<News> findAllByOrderById(Pageable pageable);
+
     List<News> findByTitleAndDate(String title, Date date);
 }
 

@@ -78,3 +78,12 @@ The date must be written in the 'yyyy-MM-dd' format only. An error message is al
 
 Image is optional therefore you might not click "Выберите файл" button. It will be mean that image will not be shown on the newsline page.
 When you will click on "Добавить" button, you can see message "Вы успешно добавили новость!". It means that news was added successfully. If you see the message "Новость с таким заголовком и датой уже существует!" you need to change date or title or body of your news because it is already exists. 
+
+### Something about project structure
+**Docker** folder contains Dockerfile which runs this application in container and bash scripts to run and remove Docker container/image from your system.
+
+**main** folder contains following folders:
+- **database** folder contains .sql file which create database and table for this app;
+- **dockerbuild** folder contains bash script for setting database user login and password to this app. These data comes from command line when user run container and set environment variables POSTGRES_USER and POSTGRES_PASSWORD. This script also runs postgres server and create database and table for app;
+- **java** folder contains source java files for this project;
+- **resources** folder contains **templates** folder with html pages used in this project and property file for Spring.
