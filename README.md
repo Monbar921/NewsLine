@@ -6,13 +6,13 @@
 ### Then, to run this application, you have 2 choices:
 
 ### 1. Use Docker (simple)
-Just put following code to you terminal inside of root folder project (Newsline) and wait around 3 minutes while docker container and application inside its will be deployed.
+Just put following code to you terminal inside of root folder project (Newsline) and wait around 3 minutes while docker container and application inside its will be deployed. Instead of POSTGRES_USER and POSTGRES_PASSWORD use your own examples (or you can keep it as default newsline and newsline):
 ``` 
 docker build --tag 'newsline' .
 docker run -p 8585:8080 -it --detach 'newsline'
 ```
 
-If you have UNIX-like system, you can run bash script, which runs 2 commands above:
+If you have UNIX-like system, you can run bash script, which runs 2 commands above, but previously change POSTGRES_USER and POSTGRES_PASSWORD in Docker/docker_start.sh:
 ``` 
 ./Docker/docker_start.sh
 ```
@@ -27,7 +27,7 @@ If you want to delete docker container and image and you have UNIX-like system, 
 ./Docker/docker_remove.sh
 ```
 ### 2. Manually deploying (hard)
-#### 2.1 Create database 'newsline' in postgresql server:
+#### 2.1 Create database 'newsline' in postgresql database:
 ``` 
 CREATE DATABASE newsline;
 ```
@@ -42,17 +42,21 @@ CREATE TABLE IF NOT EXISTS news(
 );
 ```
 
-First 2 step you can execute as follows in one command (you are in project root folder):
+First 2 step present in sql file which is located in:
 ``` 
-sudo -u postgres psql -a -f src/main/database/init_database.sql
+src/main/database/init_database.sql
 ```
 
-#### 2.3 Change password of 'postgres' user:
+#### 2.3 Create a new user in your database and give him all permissions:
 ``` 
-psql -U postgres -d newsline -c "alter user postgres with password 'postgres';"
+    CREATE USER $POSTGRES_USER WITH PASSWORD $PASSWORD;
+    GRANT CONNECT ON DATABASE "newsline" to $POSTGRES_USER;
+    GRANT ALL PRIVILEGES ON DATABASE "newsline" to $POSTGRES_USER;
+    GRANT pg_read_all_data to $POSTGRES_USER;
+    GRANT pg_write_all_data to $POSTGRES_USER;
 ```
 
-#### 2.4 Write password from previous step in 'spring.datasource.password' field. It is located in:
+#### 2.4 Write password and username from previous step in 'spring.datasource.password' and 'spring.datasource.username' fields. It is located in:
 ``` 
 src/main/resources/application.properties
 ```
@@ -73,3 +77,4 @@ Add news page consist of 3 text required and 1 optional fields. You have to writ
 The date must be written in the 'yyyy-MM-dd' format only. An error message is also sent if you make a mistake.
 
 Image is optional therefore you might not click "Выберите файл" button. It will be mean that image will not be shown on the newsline page.
+When you will click on "Добавить" button, you can see message "Вы успешно добавили новость!". It means that news was added successfully. If you see the message "Новость с таким заголовком и датой уже существует!" you need to change date or title or body of your news because it is already exists. 
