@@ -8,12 +8,23 @@
 ### 1. Use Docker (simple)
 Just put following code to you terminal inside of root folder project (Newsline) and wait around 3 minutes while docker container and application inside its will be deployed.
 ``` 
-docker build --tag 'newsline'
+docker build --tag 'newsline' .
 docker run -p 8585:8080 -it --detach 'newsline'
 ```
+
+If you have UNIX-like system, you can run bash script, which runs 2 commands above:
+``` 
+./Docker/docker_start.sh
+```
+
 Open your web browser and go to address (if your 8585 port is busy, then go to Dockerfile and change mapped ports to another one)
 ``` 
 http://localhost:8585/
+```
+
+If you want to delete docker container and image and you have UNIX-like system, you can run bash script, which will do this:
+``` 
+./Docker/docker_remove.sh
 ```
 ### 2. Manually deploying (hard)
 #### 2.1 Create database 'newsline' in postgresql server:
