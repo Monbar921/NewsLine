@@ -1,0 +1,45 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
+    <property name="uuid_type" value="uuid"/>
+    <property name="uuid_function" value="uuid_generate_v4()"/>
+
+    <changeSet author="denis.kornilovich" id="7" labels="drop-columns-in-news-and-images">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="news"/>
+            <tableExists tableName="images"/>
+
+            <columnExists tableName="news"
+                          columnName="uuid_id"/>
+            <columnExists tableName="images"
+                          columnName="uuid_id"/>
+            <columnExists tableName="images"
+                          columnName="news_uuid_id"/>
+
+            <columnExists tableName="news"
+                          columnName="id"/>
+            <columnExists tableName="images"
+                          columnName="id"/>
+            <columnExists tableName="images"
+                          columnName="news_id"/>
+        </preConditions>
+
+        <dropColumn tableName="news" columnName="id"/>
+        <dropColumn tableName="images" columnName="id"/>
+        <dropColumn tableName="images" columnName="news_id"/>
+
+        <renameColumn tableName="news" oldColumnName="uuid_id" newColumnName="id"/>
+        <renameColumn tableName="images" oldColumnName="uuid_id" newColumnName="id"/>
+        <renameColumn tableName="images" oldColumnName="news_uuid_id" newColumnName="news_id"/>
+
+        <rollback>
+
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

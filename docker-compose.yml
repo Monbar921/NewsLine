@@ -1,0 +1,138 @@
+version: "3"
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    #    ports:
+    #      - "5672:5672"
+    #      - "15672:15672"
+    expose:
+      - "5672"
+      - "15672"
+    networks:
+      - newsline_network
+
+  resource-server:
+    build: java-web/
+    restart: on-failure
+    environment:
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    ports:
+      - '8080:8080'
+    expose:
+      - "8080"
+    depends_on:
+      - auth-server
+    tty: true
+    networks:
+      - newsline_network
+
+  auth-server:
+    build: oauth
+    restart: on-failure
+    ports:
+      - '9000:9000'
+    expose:
+      - "9000"
+    depends_on:
+      - rabbitmq
+      - db
+    tty: true
+    networks:
+      - newsline_network
+
+  activation-server:
+    build: activation-server
+    restart: on-failure
+    #    ports:
+    #      - '9100:9100'
+    expose:
+      - "9100"
+    depends_on:
+      - rabbitmq
+    tty: true
+    networks:
+      - newsline_network
+
+  front:
+    build: react-front/
+    restart: on-failure
+    ports:
+      - '80:80'
+    depends_on:
+      - resource-server
+    tty: true
+    networks:
+      - newsline_network
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./database/init_database.sql:/docker-entrypoint-initdb.d/init_database.sql
+    ports:
+      - '5432:5432'
+    expose:
+      - "5432"
+    networks:
+      - newsline_network
+
+  liquibase:
+    image: liquibase/liquibase:latest
+    restart: on-failure
+    depends_on:
+      - db
+    volumes:
+      - ./database/liquibase/changeLog/:/liquibase/changelog/
+    command: --defaults-file=/liquibase/changelog/liquibase.properties --username=postgres --password=postgres update
+    #    command: --defaults-file=/liquibase/changelog/liquibase.properties --username=postgres --password=postgres --labels="create_users" update
+    #    command: --defaults-file=/liquibase/changelog/liquibase.properties --username=postgres --password=postgres rollback-count 1
+
+    # if i want to update only schema
+    #     command:>
+    #       sh -c "liquibase diffChangeLog --referenceUsername=postgres --referencePassword=postgres --referenceUrl="jdbc:postgresql://db:5432/newsline" --username=postgres --url="jdbc:postgresql://db2:5432/newsline" --password=postgres --changeLogFile=ex.xml &&
+    #       liquibase update --username=postgres --url="jdbc:postgresql://db2:5432/newsline" --password=postgres --changeLogFile=ex.xml"
+
+    # if i want to update not only schema, but also data in tables
+    # command: >
+    #   sh -c "liquibase --username=postgres --url="jdbc:postgresql://db:5432/newsline" --password=postgres --diffTypes=tables,columns,data --dataOutputDirectory=myData --changeLogFile=ex.xml generate-changelog &&
+    #   liquibase update --username=postgres --url="jdbc:postgresql://db2:5432/newsline" --password=postgres --changeLogFile=ex.xml"
+    networks:
+      - newsline_network
+
+  elasticsearch:
+      image: elasticsearch:8.8.1
+#      build: elasticsearch/
+      environment:
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - "discovery.type=single-node"
+        - "ELASTIC_PASSWORD=elastic"
+      ports:
+        - "9200:9200"
+        - "9300:9300"
+      expose:
+        - 9200
+        - 9300
+      depends_on:
+        - db
+      networks:
+        - newsline_network
+
+  logstash:
+    build: logstash/
+#    ports:
+#      - "5000:5000"
+    expose:
+      - 5000
+    environment:
+      - "ELASTICSEARCH_HOST=https://elasticsearch"
+      - "ELASTICSEARCH_PORT=9200"
+    depends_on:
+      - elasticsearch
+    networks:
+      - newsline_network
+
+networks:
+  newsline_network:

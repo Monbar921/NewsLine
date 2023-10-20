@@ -1,0 +1,5 @@
+- pipeline.id: main
+  path.config: "/usr/share/logstash/pipeline"
+
+- pipeline.id: news-pipeline
+  path.config: "/usr/share/logstash/config/news_sync.conf"

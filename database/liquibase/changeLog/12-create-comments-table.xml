@@ -1,0 +1,56 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
+    <property name="uuid_type" value="uuid"/>
+    <property name="uuid_function" value="uuid_generate_v4()"/>
+    <changeSet author="denis.kornilovich" id="12" labels="create-comments-table">
+        <preConditions onFail="HALT">
+            <not>
+                <tableExists tableName="comments"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="comments">
+            <column name="id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="news_id" type="${uuid_type}">
+                <constraints nullable="false" unique="false" foreignKeyName="fk_news_id" references="news(id)"/>
+            </column>
+            <column name="user_id" type="${uuid_type}">
+                <constraints nullable="false" unique="false" foreignKeyName="fk_user_id" references="users(id)"/>
+            </column>
+            <column name="text" type="varchar">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="parent_comment_id" type="${uuid_type}">
+                <constraints nullable="true" foreignKeyName="fk_parent_comment_id" references="comments(id)"/>
+            </column>
+            <column name="deleted" type="boolean"
+                    defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fully_deleted" type="boolean"
+                    defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="modified_at" type="timestamp">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="comments"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
+

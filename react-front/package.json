@@ -1,0 +1,50 @@
+{
+  "name": "my-react-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && webpack --mode development",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.0",
+    "@mui/material-next": "^6.0.0-alpha.92",
+    "bootstrap": "^5.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "html-webpack-plugin": "^5.5.1",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^3.1.2",
+    "mdb-react-ui-kit": "^6.1.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.8.0",
+    "react-bootstrap-pagination-control": "^1.0.5",
+    "react-dom": "^18.2.0",
+    "react-paginate": "^8.2.0",
+    "react-router-dom": "^5.2.0",
+    "reactjs-popup": "^2.0.5",
+    "simple-update-notifier": "^1.1.0",
+    "update-notifier": "^6.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.1",
+    "@babel/preset-react": "^7.22.3",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
+    "html-loader": "^4.2.0",
+    "nodemon": "^2.0.22",
+    "sass-loader": "^13.3.1",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.85.0",
+    "webpack-cli": "^5.1.3"
+  }
+}

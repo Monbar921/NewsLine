@@ -1,0 +1,54 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
+    <property name="uuid_type" value="uuid"/>
+    <property name="uuid_function" value="uuid_generate_v4()"/>
+
+    <changeSet author="denis.kornilovich" id="6" labels="pk-migration">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="news"/>
+            <tableExists tableName="images"/>
+
+            <columnExists tableName="news"
+                          columnName="uuid_id"/>
+            <columnExists tableName="images"
+                          columnName="uuid_id"/>
+            <columnExists tableName="images"
+                          columnName="news_uuid_id"/>
+        </preConditions>
+
+        <dropAllForeignKeyConstraints
+                baseTableName="images"/>
+
+        <dropPrimaryKey tableName="images"
+                        dropIndex="true"/>
+
+        <dropPrimaryKey tableName="news"
+                        dropIndex="true"/>
+
+
+        <addPrimaryKey tableName="news" columnNames="uuid_id" constraintName="PK_NEWS"/>
+        <addPrimaryKey tableName="images" columnNames="uuid_id" constraintName="PK_IMAGES"/>
+
+
+        <rollback>
+            <dropPrimaryKey tableName="news" constraintName="PK_NEWS"
+                            dropIndex="true"
+            />
+            <dropPrimaryKey tableName="images" constraintName="PK_IMAGES"
+                            dropIndex="true"
+            />
+
+            <addPrimaryKey tableName="news" columnNames="id" />
+            <addPrimaryKey tableName="images" columnNames="id" />
+
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
+

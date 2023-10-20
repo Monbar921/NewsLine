@@ -1,0 +1,56 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
+    <property name="uuid_type" value="uuid"/>
+    <property name="uuid_function" value="uuid_generate_v4()"/>
+
+    <changeSet author="denis.kornilovich" id="5" labels="create-fk-for-uuid">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="news"/>
+            <tableExists tableName="images"/>
+
+            <columnExists tableName="news"
+                          columnName="uuid_id"/>
+            <columnExists tableName="images"
+                          columnName="uuid_id"/>
+            <columnExists tableName="images"
+                          columnName="news_uuid_id"/>
+        </preConditions>
+
+<!--        <dropAllForeignKeyConstraints-->
+<!--                baseTableName="images"/>-->
+
+        <addForeignKeyConstraint baseColumnNames="news_uuid_id"
+                                 baseTableName="images"
+                                 constraintName="fk_news_uuid_id"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="uuid_id"
+                                 referencedTableName="news"
+                                 validate="true"/>
+        <rollback>
+
+            <dropForeignKeyConstraint baseTableName="images"
+                                      constraintName="fk_news_uuid_id"/>
+
+<!--            <addForeignKeyConstraint baseColumnNames="news_id"-->
+<!--                                     baseTableName="images"-->
+<!--                                     constraintName="fk_news_id"-->
+<!--                                     deferrable="true"-->
+<!--                                     initiallyDeferred="true"-->
+<!--                                     onDelete="CASCADE"-->
+<!--                                     onUpdate="RESTRICT"-->
+<!--                                     referencedColumnNames="id"-->
+<!--                                     referencedTableName="news"-->
+<!--                                     validate="true"/>-->
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
